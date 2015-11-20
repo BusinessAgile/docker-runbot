@@ -1,0 +1,40 @@
+odoo:
+  restart: always
+  build: ./odoo/
+  command: ""
+  expose:
+    - 8069
+    - 8071
+  links:
+    - db:db
+  env_file: .env
+  volumes:
+    - "/odoo-extra/runbot/static/nginx/:/etc/nginx/conf.d/"
+  volumes_from:
+    - data
+
+nginx:
+  restart: always
+  image: nginx
+  ports:
+    - "80:80"
+  volumes_from:
+    - odoo
+  links:
+    - odoo:odoo
+
+db:
+  restart: always
+  image: postgres
+  volumes_from:
+    - data
+  ports:
+    - 5432
+
+data:
+  restart: always
+  image: postgres:latest
+  volumes:
+    - /var/lib/postgresql
+    - /data/odoo
+  command: "true"
