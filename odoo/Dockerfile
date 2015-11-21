@@ -42,10 +42,12 @@ RUN set -x; \
             python-werkzeug \
             python-xlwt \
             python-yaml \
+            python-simplejson \
+            python-matplotlib \
             antiword \
             graphviz \
             ghostscript \
-            postgresql \
+            postgresql-client \
             python-gevent \
             poppler-utils \
         && curl -o wkhtmltox.deb -SL http://nightly.odoo.com/extra/wkhtmltox-0.12.1.2_linux-jessie-amd64.deb \
@@ -83,5 +85,6 @@ ENV OPENERP_SERVER /etc/odoo/openerp-server.conf
 # USER odoo
 
 WORKDIR "/odoo"
-ENTRYPOINT ["./openerp-server", "-c", "/etc/odoo/openerp-server.conf"]
+ENTRYPOINT ["./odoo.py"]
+# ENTRYPOINT ["./odoo-entrypoint.sh"]
 CMD []

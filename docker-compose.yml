@@ -2,12 +2,11 @@ odoo:
   restart: always
   build: ./odoo/
   command: ""
-  expose:
+  ports:
     - 8069
     - 8071
   links:
     - db:db
-  env_file: .env
   volumes:
     - "/odoo-extra/runbot/static/nginx/:/etc/nginx/conf.d/"
   volumes_from:
@@ -26,6 +25,11 @@ nginx:
 db:
   restart: always
   image: postgres
+  env_file: .env
+  environment:
+    - DB_USER=odoo
+    - DB_PASS=odoo
+    - DB_NAME=runbot
   volumes_from:
     - data
   ports:
@@ -33,7 +37,7 @@ db:
 
 data:
   restart: always
-  image: postgres:latest
+  image: postgres
   volumes:
     - /var/lib/postgresql
     - /data/odoo
