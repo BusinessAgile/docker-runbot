@@ -13,7 +13,7 @@ odoo:
     # for dev only (todo: add configuration files per env)
     - "./odoo/odoo-extra/:/opt/odoo/addons/odoo-extra"
     - "./odoo/odoo:/opt/odoo/sources"
-    - "/opt/odoo-extra/runbot/static/nginx/:/etc/nginx/conf.d/"
+    - "/opt/odoo-extra/runbot/static/nginx/"
   volumes_from:
     - data
 
@@ -22,6 +22,8 @@ nginx:
   image: nginx
   ports:
     - "80:80"
+  volumes:
+    - "./nginx/nginx.conf:/etc/nginx/nginx.conf"
   volumes_from:
     - odoo
   links:
