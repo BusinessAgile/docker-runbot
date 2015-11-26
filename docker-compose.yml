@@ -1,14 +1,19 @@
 odoo:
+  tty: true
+  stdin_open: true
   restart: always
   build: ./odoo/
   command: ""
   ports:
-    - 8069
-    - 8071
+    - "8069:8069"
+    - "8071:8071"
   links:
     - db:db
   volumes:
-    - "/odoo-extra/runbot/static/nginx/:/etc/nginx/conf.d/"
+    # for dev only (todo: add configuration files per env)
+    - "./odoo/odoo-extra/:/opt/odoo/addons/odoo-extra"
+    - "./odoo/odoo:/opt/odoo/sources"
+    - "/opt/odoo-extra/runbot/static/nginx/:/etc/nginx/conf.d/"
   volumes_from:
     - data
 
@@ -24,7 +29,7 @@ nginx:
 
 db:
   restart: always
-  image: postgres
+  image: postgres:9.4
   env_file: .env
   environment:
     - DB_USER=odoo
@@ -32,12 +37,12 @@ db:
     - DB_NAME=runbot
   volumes_from:
     - data
-  ports:
+  expose:
     - 5432
 
 data:
   restart: always
-  image: postgres
+  image: postgres:9.4
   volumes:
     - /var/lib/postgresql
     - /data/odoo
