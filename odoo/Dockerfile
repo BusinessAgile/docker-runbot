@@ -71,7 +71,7 @@ RUN curl -o /usr/local/bin/gosu -SL "https://github.com/tianon/gosu/releases/dow
         && chmod +x /usr/local/bin/gosu
 
 # Install Odoo
-ENV ODOO_VERSION 9.0
+ENV ODOO_VERSION 8.0
 
 # RUN useradd -m odoo && adduser odoo sudo
 
