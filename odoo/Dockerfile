@@ -42,6 +42,7 @@ RUN set -x; \
             python-simplejson \
             python-suds \
             python-tz \
+	    python-unittest2 \
             python-vatnumber \
             python-vobject \
             python-werkzeug \
